@@ -1,0 +1,21 @@
+From 487886edb58cd5a5c68a8e2f5075f57a27f30743 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jonatan=20P=C3=A5lsson?= <jonatan.p@gmail.com>
+Date: Sat, 5 Oct 2019 22:33:27 +0200
+Subject: [PATCH] Disable flake8
+
+---
+ setup.py | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 1eee9c1..88798ea 100755
+--- a/setup.py
++++ b/setup.py
+@@ -105,7 +105,6 @@ setup(
+     url='https://github.com/zalando/connexion',
+     keywords='openapi oai swagger rest api oauth flask microservice framework',
+     license='Apache License Version 2.0',
+-    setup_requires=['flake8'],
+     install_requires=install_requires + [flask_require],
+     tests_require=tests_require,
+     extras_require={

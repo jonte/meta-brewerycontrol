@@ -1,0 +1,26 @@
+Yocto layer for a beer brewery control panel, using Qt/QML on Raspberry Pi 3.
+
+Dependencies
+============
+
+  URI: https://git.openembedded.org/meta-openembedded
+  branch: warrior
+
+  URI: https://github.com/meta-qt5/meta-qt5.git
+  branch: warrior
+
+  URI: git://git.yoctoproject.org/meta-raspberrypi
+  branch: warrior
+
+  URI: https://github.com/openembedded/openembedded-core
+  branch: warrior
+
+  URI: https://git.yoctoproject.org/git/poky
+  branch: warrior
+
+Patches
+=======
+
+Patches are submitted to GitHub: http://github.com/jonte/meta-brewerycontrol
+
+Maintainer: Jonatan Pålsson <Jonatan.p@gmail.com>
