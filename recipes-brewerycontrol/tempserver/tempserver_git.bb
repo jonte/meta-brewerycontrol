@@ -17,6 +17,9 @@ SRCREV = "01a316a87e945d1c12c61d737e6b700533b835a3"
 
 S = "${WORKDIR}/git"
 
+TEMPSERVERENV_raspberrypi = ""
+TEMPSERVERENV_qemux86-64 = "DUMMY=1"
+
 do_install () {
     mkdir -p ${D}/opt/tempserver \
              ${D}/${systemd_unitdir}/system/
@@ -47,6 +50,7 @@ After=network.target ds2482.service
 [Service]
 Type=simple
 WorkingDirectory=/opt/tempserver
+Environment=${TEMPSERVERENV}
 ExecStart=/opt/tempserver/main.py
 
 [Install]
