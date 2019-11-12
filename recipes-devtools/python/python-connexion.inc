@@ -5,6 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=1a59efe5ec370f84218405ce2e537845"
 
 RDEPENDS_${PN} = "\
     ${PYTHON_PN}-async \
+    ${PYTHON_PN}-asyncio \
     ${PYTHON_PN}-flask \
     ${PYTHON_PN}-inflection \
     ${PYTHON_PN}-jsonschema \
