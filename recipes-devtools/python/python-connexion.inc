@@ -11,6 +11,7 @@ RDEPENDS_${PN} = "\
     ${PYTHON_PN}-openapi-spec-validator \
     ${PYTHON_PN}-pyyaml \
     ${PYTHON_PN}-requests \
+    ${PYTHON_PN}-typing \
 "
 
 inherit setuptools3 pypi
