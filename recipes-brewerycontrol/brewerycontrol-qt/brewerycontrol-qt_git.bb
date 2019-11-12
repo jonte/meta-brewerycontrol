@@ -16,6 +16,11 @@ inherit cmake cmake_qt5 systemd
 
 S = "${WORKDIR}/git"
 
+# Set the display platform based on which target we're building for. For qemu,
+# a VNC client must be used to display the UI.
+QT_QPA_PLATFORM_raspberrypi3 = "eglfs"
+QT_QPA_PLATFORM_qemux86-64 = "vnc"
+
 do_install_append() {
     mkdir -p ${D}${systemd_unitdir}/system/ \
              ${D}${sysconfdir}
@@ -28,7 +33,7 @@ After=tempserver.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/brewerycontrol_qt -platform eglfs
+ExecStart=/usr/bin/brewerycontrol_qt -platform ${QT_QPA_PLATFORM}
 Restart=on-failure
 
 [Install]
