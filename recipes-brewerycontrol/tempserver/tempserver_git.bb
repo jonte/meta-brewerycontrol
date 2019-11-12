@@ -21,10 +21,12 @@ TEMPSERVERENV_raspberrypi = ""
 TEMPSERVERENV_qemux86-64 = "DUMMY=1"
 
 do_install () {
-    mkdir -p ${D}/opt/tempserver \
-             ${D}/${systemd_unitdir}/system/
+    mkdir -p ${D}/opt/tempserver                \
+             ${D}/${systemd_unitdir}/system/    \
+             ${D}/${sysconfdir}
     cp -ap ${S}/* ${D}/opt/tempserver
     chown -R root:root ${D}/opt/tempserver
+    install -m 755 ${S}/tempserver.conf.sample ${D}/${sysconfdir}/tempserver.conf
 
     cat <<HEREDOC > ${D}${systemd_unitdir}/system/ds2482.service
 [Unit]
@@ -60,4 +62,7 @@ HEREDOC
 
 SYSTEMD_SERVICE_${PN} = "ds2482.service tempserver.service"
 
-FILES_${PN} = "/opt/tempserver/*"
+FILES_${PN} = " \
+    /opt/tempserver/* \
+    ${sysconfdir}/   \
+"
