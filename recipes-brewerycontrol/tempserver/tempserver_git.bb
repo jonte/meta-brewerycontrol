@@ -3,7 +3,9 @@ LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=acf38d238323e04932295add4a59e827"
 
 inherit systemd
 
-RDEPENDS_${PN} = "python3-connexion     \
+RDEPENDS_${PN} = "                      \
+                  python3-apscheduler   \
+                  python3-connexion     \
                   python3-gpiozero      \
                   python3-simple-pid    \
                   python3-w1thermsensor \
