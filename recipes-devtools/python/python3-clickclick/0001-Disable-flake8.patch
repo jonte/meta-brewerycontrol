@@ -1,0 +1,22 @@
+From 645ef89fb93279bd2801b77f7b88cd560a0593b0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jonatan=20P=C3=A5lsson?= <jonatan.p@gmail.com>
+Date: Thu, 14 Nov 2019 16:18:36 +0100
+Subject: [PATCH] Disable flake8
+
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 3ee6151..8b0285d 100755
+--- a/setup.py
++++ b/setup.py
+@@ -144,7 +144,7 @@ def setup_package():
+         packages=setuptools.find_packages(exclude=['tests', 'tests.*']),
+         package_data={MAIN_PACKAGE: ["*.json"]},
+         install_requires=install_reqs,
+-        setup_requires=['six', 'flake8'],
++        setup_requires=['six'],
+         cmdclass=cmdclass,
+         tests_require=['pytest-cov', 'pytest'],
+         command_options=command_options,
