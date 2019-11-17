@@ -11,12 +11,14 @@ RDEPENDS_${PN} = "                      \
                   python3-w1thermsensor \
 "
 
+RDEPENDS_${PN}_raspberrypi3 = "ds2482-service"
+
 SRC_URI = "git://github.com/jonte/tempserver.git;protocol=https"
 SRCREV = "e20c29be4ea29d72dd50a9285f99dd537a658c6d"
 
 S = "${WORKDIR}/git"
 
-TEMPSERVERENV_raspberrypi = ""
+TEMPSERVERENV_raspberrypi3 = ""
 TEMPSERVERENV_qemux86-64 = "DUMMY=1"
 
 do_install_append () {
@@ -24,26 +26,10 @@ do_install_append () {
              ${D}/${sysconfdir}
     install -m 755 ${S}/tempserver.conf.sample ${D}/${sysconfdir}/tempserver.conf
 
-    cat <<HEREDOC > ${D}${systemd_unitdir}/system/ds2482.service
-[Unit]
-Description=Load ds2482 driver
-Before=basic.target
-After=local-fs.target sysinit.target
-DefaultDependencies=no
-
-[Service]
-Type=oneshot
-ExecStart=/sbin/modprobe ds2482
-ExecStart=/bin/bash -c '/bin/echo ds2482 0x18 > /sys/bus/i2c/devices/i2c-1/new_device'
-
-[Install]
-WantedBy=basic.target
-HEREDOC
-
     cat <<HEREDOC > ${D}${systemd_unitdir}/system/tempserver.service
 [Unit]
 Description=Temperature server
-After=network.target ds2482.service
+After=network.target ${@bb.utils.contains("MACHINE", "raspberrypi3", "ds2482.service", "", d)}
 
 [Service]
 Type=simple
@@ -55,9 +41,6 @@ WantedBy=basic.target
 HEREDOC
 }
 
-SYSTEMD_SERVICE_${PN} = "ds2482.service tempserver.service"
+SYSTEMD_SERVICE_${PN} = "tempserver.service"
 
-FILES_${PN} += " \
-    /opt/tempserver/* \
-    ${sysconfdir}/   \
-"
+FILES_${PN} += "${sysconfdir}"
