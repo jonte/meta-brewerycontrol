@@ -1,7 +1,7 @@
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://LICENSE.txt;md5=acf38d238323e04932295add4a59e827"
 
-inherit systemd
+inherit systemd setuptools3
 
 RDEPENDS_${PN} = "                      \
                   python3-apscheduler   \
@@ -11,21 +11,17 @@ RDEPENDS_${PN} = "                      \
                   python3-w1thermsensor \
 "
 
-# No information for SRC_URI yet (only an external source tree was specified)
 SRC_URI = "git://github.com/jonte/tempserver.git;protocol=https"
-SRCREV = "01a316a87e945d1c12c61d737e6b700533b835a3"
+SRCREV = "e20c29be4ea29d72dd50a9285f99dd537a658c6d"
 
 S = "${WORKDIR}/git"
 
 TEMPSERVERENV_raspberrypi = ""
 TEMPSERVERENV_qemux86-64 = "DUMMY=1"
 
-do_install () {
-    mkdir -p ${D}/opt/tempserver                \
-             ${D}/${systemd_unitdir}/system/    \
+do_install_append () {
+    mkdir -p ${D}/${systemd_unitdir}/system/    \
              ${D}/${sysconfdir}
-    cp -ap ${S}/* ${D}/opt/tempserver
-    chown -R root:root ${D}/opt/tempserver
     install -m 755 ${S}/tempserver.conf.sample ${D}/${sysconfdir}/tempserver.conf
 
     cat <<HEREDOC > ${D}${systemd_unitdir}/system/ds2482.service
@@ -51,9 +47,8 @@ After=network.target ds2482.service
 
 [Service]
 Type=simple
-WorkingDirectory=/opt/tempserver
 Environment=${TEMPSERVERENV}
-ExecStart=/opt/tempserver/main.py
+ExecStart=/usr/bin/tempserver
 
 [Install]
 WantedBy=basic.target
@@ -62,7 +57,7 @@ HEREDOC
 
 SYSTEMD_SERVICE_${PN} = "ds2482.service tempserver.service"
 
-FILES_${PN} = " \
+FILES_${PN} += " \
     /opt/tempserver/* \
     ${sysconfdir}/   \
 "
