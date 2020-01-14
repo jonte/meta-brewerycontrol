@@ -23,5 +23,6 @@ ExecStart=/bin/bash -c '/bin/echo ds2482 0x18 > /sys/bus/i2c/devices/i2c-1/new_d
 [Install]
 WantedBy=basic.target
 HEREDOC
+}
 
 SYSTEMD_SERVICE_${PN} = "ds2482.service"
