@@ -16,10 +16,15 @@ inherit cmake cmake_qt5 systemd
 
 S = "${WORKDIR}/git"
 
+PACKAGECONFIG ??= "webgl"
+PACKAGECONFIG[webgl] = ",,,qtwebglplugin-plugins"
+
 # Set the display platform based on which target we're building for. For qemu,
 # a VNC client must be used to display the UI.
-QT_QPA_PLATFORM_raspberrypi3 = "eglfs"
-QT_QPA_PLATFORM_qemux86-64 = "vnc"
+MAIN_QT_QPA_PLATFORM_raspberrypi3 = "eglfs"
+MAIN_QT_QPA_PLATFORM_qemux86-64 = "vnc"
+
+USE_WEBGL = ""
 
 do_install_append() {
     mkdir -p ${D}${systemd_unitdir}/system/ \
@@ -33,7 +38,7 @@ After=tempserver.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/brewerycontrol_qt -platform ${QT_QPA_PLATFORM}
+ExecStart=/usr/bin/brewerycontrol_qt -platform ${MAIN_QT_QPA_PLATFORM}
 Restart=on-failure
 
 [Install]
@@ -46,11 +51,29 @@ maxChartPoints = 500
 pointRemoveChunkSize = 1
 HEREDOC
 
+    if [ "${@bb.utils.contains('PACKAGECONFIG', 'webgl', '1', '0', d)}" = "1" ]; then
+        cat <<HEREDOC > ${D}${systemd_unitdir}/system/brewerycontrol_qt_webgl.service
+[Unit]
+Description=User interface (webgl)
+After=network.target
+After=tempserver.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/brewerycontrol_qt -platform webgl:port=8000
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+HEREDOC
+
+    fi
+
 }
 
 SYSTEMD_SERVICE_${PN} = "brewerycontrol_qt.service"
+SYSTEMD_SERVICE_${PN} += "${@bb.utils.contains('PACKAGECONFIG', 'webgl', 'brewerycontrol_qt_webgl.service', '', d)}"
 
 FILES_${PN} += " \
-    ${systemd_unitdir}/system/brewerycontrol_qt.service \
     ${sysconfdir}/brewerycontrol.conf                   \
 "
