@@ -14,7 +14,7 @@ RDEPENDS_${PN} = "                      \
 RDEPENDS_${PN}_append_raspberrypi3 = "ds2482-service"
 
 SRC_URI = "git://github.com/jonte/tempserver.git;protocol=https"
-SRCREV = "e16466f13d6a46570b6c87df625231795000f7d1"
+SRCREV = "a9090aefbff792dc5b39c1eae6d5dc2cf326fb0b"
 
 S = "${WORKDIR}/git"
 
