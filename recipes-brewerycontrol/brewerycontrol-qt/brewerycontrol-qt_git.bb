@@ -3,7 +3,7 @@ LIC_FILES_CHKSUM = ""
 
 # No information for SRC_URI yet (only an external source tree was specified)
 SRC_URI = "git://github.com/jonte/brewerycontrol_qt.git;protocol=https"
-SRCREV = "157b9258e7e9f0807472f0c478887d89371b232c"
+SRCREV = "9f76363acaa3a89436025d62f1fbd7dfa66899bc"
 
 DEPENDS = "qtbase qtdeclarative qtcharts"
 RDEPENDS_${PN} = "\
