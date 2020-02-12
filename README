@@ -4,19 +4,19 @@ Dependencies
 ============
 
   URI: https://git.openembedded.org/meta-openembedded
-  branch: warrior
+  branch: master
 
   URI: https://github.com/meta-qt5/meta-qt5.git
-  branch: warrior
+  branch: master
 
   URI: git://git.yoctoproject.org/meta-raspberrypi
-  branch: warrior
+  branch: master
 
   URI: https://github.com/openembedded/openembedded-core
-  branch: warrior
+  branch: master
 
   URI: https://git.yoctoproject.org/git/poky
-  branch: warrior
+  branch: master
 
 Patches
 =======
